@@ -1293,7 +1293,7 @@ footer {
 </header>
 
 <div class="romance" id="romance">
-🎉✨ HAPPY BIRTHDAY, BLESS! ✨🎉
+🎉✨ HAPPY BIRTHDAY, HELLEN❤️! ✨🎉
 
 🌟 Today is ALL ABOUT YOU — the incredible person who brings sunshine ☀️, laughter 😂, and endless joy to everyone around! 
 I'm beyond grateful to have you as a friend and to celebrate this magical day with you! 🥳
@@ -1860,7 +1860,7 @@ onReady(()=> {
   
   // ENTRY PASSWORD
   const PASSWORD = "12345";
-  const RESET_PASSWORD = "0000";
+  const RESET_PASSWORD = "Bless1";
   
   const MAX_SPINS = 3;
   const STORAGE_KEY = 'bday_spins_left';
@@ -1871,7 +1871,7 @@ onReady(()=> {
 
   let input;
   if (isMobile) {
-    input = prompt("Enter password (12345):");
+    input = prompt("Enter password HINT(12345):");
   } else {
     input = prompt("🎂✨ WELCOME TO YOUR BIRTHDAY CELEBRATION, GOOD LUCK IN SPINNING YOUR WHEEL! ✨🎂\n\n🔐 Enter the secret password to begin the party! 🎉\n\n💡 Hint: It's 12345\n\nPassword:");
   }
@@ -1892,7 +1892,7 @@ onReady(()=> {
   }
   
   setTimeout(() => {
-    showToast('🎉✨ WELCOME TO YOUR BIRTHDAY CELEBRATION, GOOD LUCK IN SPINNING YOUR WHEEL! 🎂✨', 'success', 3500);
+    showToast('🎉✨ WELCOME TO YOUR BIRTHDAY CELEBRATION, GOOD LUCK IN SPINNING YOUR WHEEL, YOU HAVE 3 CHANCES! 🎂✨', 'success', 4500);
     createConfettiBurst(300);
   }, 1500);
   
@@ -2228,7 +2228,7 @@ onReady(()=> {
   resetBtn.addEventListener('click', ()=>{
     let resetPassword;
     if (isMobile) {
-      resetPassword = prompt("Enter RESET password (12345):");
+      resetPassword = prompt("Enter RESET password HINT (12345):");
     } else {
       resetPassword = prompt("🔄✨ RESET THE PARTY! ✨🔄\n\n🔐 Enter the RESET password:\n\n💡 Reset Password: 12345\n\nPassword:");
     }
@@ -2277,3 +2277,4 @@ onReady(()=> {
 </script>
 </body>
 </html>
+
