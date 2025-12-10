@@ -157,7 +157,7 @@ body{
   background: linear-gradient(135deg, var(--card), #fff5f7); 
   border-radius: 25px; 
   padding: 20px; 
-  display: flex; /* Changed from grid to flex for better centering */
+  display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 
@@ -240,26 +240,23 @@ body{
   width: 290px !important;
   height: 290px !important;
   box-shadow: inset 0 -8px 25px rgba(0,0,0,0.06);
-  /* Ensure responsive scaling */
   max-width: 100%;
   max-height: 100%;
   aspect-ratio: 1 / 1;
-  /* MOBILE: Hardware acceleration */
   transform: translateZ(0);
   will-change: transform;
-  /* MOBILE: Prevent touch delay */
   touch-action: manipulation;
 }
 
 /* Fixed: Pointer better positioning */
 #pointer { 
   position:absolute; 
-  top:-40px; /* Increased from -30px for better visibility */
+  top:-40px;
   left:50%; 
   transform:translateX(-50%); 
   width:0; 
   height:0; 
-  border-left:32px solid transparent; /* Slightly larger */
+  border-left:32px solid transparent;
   border-right:32px solid transparent; 
   border-bottom:65px solid #ff4d6d; 
   z-index:100;
@@ -292,12 +289,10 @@ body{
     border-bottom: 55px solid #ff4d6d;
   }
   
-  /* MOBILE: Reduce balloon animations */
   .floating-balloon {
     animation-duration: 40s;
   }
   
-  /* MOBILE: Limit number of balloons */
   .floating-balloon:nth-child(n+8) {
     display: none;
   }
@@ -315,7 +310,6 @@ body{
     height: min(260px, 80vw) !important;
   }
 }
-/* ========== END WHEEL FIXES ========== */
 
 #controls { 
   margin-top:25px; 
@@ -324,15 +318,12 @@ body{
   align-items:center; 
   justify-content:center; 
   z-index:20;
-  /* MOBILE: Wrap on small screens */
   flex-wrap: wrap;
 }
 #btn, #resetBtn, #muteBtn, #shareBtn { 
-  /* PULSATING SHAKE EFFECT FOR ALL BUTTONS */
   animation: pulseShake 3s infinite ease-in-out;
   position: relative;
   transition: all 0.3s ease;
-  /* MOBILE: Better touch */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   user-select: none;
@@ -350,7 +341,6 @@ body{
   box-shadow:0 15px 35px rgba(214,51,132,0.3); 
   letter-spacing:1px; 
   overflow: hidden;
-  /* MOBILE: Minimum touch target */
   min-height: 60px;
 }
 #btn::before, #resetBtn::before {
@@ -367,7 +357,6 @@ body{
   left: 100%;
 }
 #btn:hover, #resetBtn:hover, #muteBtn:hover, #shareBtn:hover {
-  /* INTENSIFY SHAKE ON HOVER */
   animation: pulseShake 1s infinite ease-in-out;
   transform: translateY(-3px);
 }
@@ -388,13 +377,13 @@ body{
 #btn:active, #resetBtn:active, #muteBtn:active, #shareBtn:active { 
   transform:translateY(3px) scale(.97); 
   box-shadow:0 8px 20px rgba(214,51,132,0.25);
-  animation: none; /* Stop shaking when clicked */
+  animation: none;
 }
 #btn[disabled]{ 
   opacity:.6; 
   cursor:not-allowed; 
   filter: grayscale(0.5);
-  animation: none; /* Disabled button doesn't shake */
+  animation: none;
 }
 
 #muteBtn{
@@ -413,7 +402,6 @@ body{
   height: 60px;
   justify-content: center;
   backdrop-filter: blur(5px);
-  /* MOBILE: Larger touch target */
   min-width: 70px;
   min-height: 70px;
 }
@@ -450,7 +438,6 @@ body{
   position: relative;
   z-index: 20;
   backdrop-filter: blur(5px);
-  /* MOBILE: Text overflow fix */
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
@@ -469,7 +456,7 @@ body{
   100%{transform:scale(1); opacity:1; background-color: rgba(255,255,255,0.2)} 
 }
 
-/* VIDEO GALLERY STYLES */
+/* VIDEO GALLERY STYLES - FIXED */
 .video-gallery-container {
   margin-top: 30px;
   max-width: 920px;
@@ -520,6 +507,9 @@ body{
   height: 100%;
   object-fit: cover;
   border-radius: 12px;
+  transition: all 0.4s ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .video-play-button {
@@ -532,6 +522,8 @@ body{
   text-shadow: 0 4px 10px rgba(0,0,0,0.5);
   opacity: 0.8;
   transition: all 0.3s ease;
+  z-index: 5;
+  pointer-events: none;
 }
 
 .video-item:hover .video-play-button {
@@ -539,6 +531,7 @@ body{
   transform: translate(-50%, -50%) scale(1.2);
 }
 
+/* MOBILE VIDEO LIGHTBOX FIXES */
 .video-lightbox {
   position: fixed;
   top: 0;
@@ -549,23 +542,31 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 400;
+  z-index: 1000;
   animation: fadeIn 0.3s ease;
+  touch-action: manipulation;
+  -webkit-overflow-scrolling: touch;
 }
 
 .video-lightbox-content {
   position: relative;
-  max-width: 90%;
-  max-height: 90%;
+  width: 95%;
+  max-width: 800px;
+  max-height: 90vh;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .video-lightbox-content video {
-  max-width: 100%;
-  max-height: 85vh;
-  border-radius: 15px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  display: block;
+  border-radius: 0;
 }
 
+/* Desktop close button */
 .close-video-lightbox {
   position: absolute;
   top: -50px;
@@ -580,11 +581,135 @@ body{
   cursor: pointer;
   transition: all 0.4s ease;
   backdrop-filter: blur(5px);
+  z-index: 1001;
 }
 
 .close-video-lightbox:hover {
   background: rgba(255,255,255,0.5);
   transform: scale(1.15);
+}
+
+/* MOBILE-SPECIFIC CLOSE BUTTONS */
+.video-lightbox-header {
+  display: none;
+}
+
+.mobile-controls {
+  display: none;
+}
+
+.close-video-lightbox-mobile {
+  display: none;
+}
+
+/* MOBILE STYLES */
+@media (max-width: 768px) {
+  .close-video-lightbox {
+    display: none;
+  }
+  
+  .video-lightbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: rgba(0,0,0,0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+  }
+  
+  .close-video-lightbox-mobile {
+    display: block;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+  }
+  
+  .video-title {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .mobile-controls {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    z-index: 1001;
+  }
+  
+  .mobile-close-btn {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .mobile-close-btn i {
+    font-size: 22px;
+  }
+  
+  .video-lightbox-content {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .video-lightbox-content video {
+    max-height: calc(100vh - 120px);
+    flex: 1;
+  }
+  
+  .close-video-lightbox-mobile,
+  .mobile-close-btn {
+    min-height: 50px;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-lightbox-header {
+    padding: 12px;
+  }
+  
+  .close-video-lightbox-mobile {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .mobile-close-btn {
+    padding: 12px;
+    font-size: 16px;
+  }
+  
+  .video-title {
+    font-size: 14px;
+  }
 }
 
 /* PICTURE GALLERY - MOBILE OPTIMIZED */
@@ -605,19 +730,15 @@ body{
   transition: all 0.4s ease;
   display:block;
   cursor: pointer;
-  /* MOBILE: Responsive images */
   width: 100%;
   max-width: 300px;
   height: 300px;
-  /* Add these properties for better image rendering */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Force hardware acceleration */
   transform: translateZ(0);
   backface-visibility: hidden;
-  /* Add loading animation */
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
@@ -628,7 +749,6 @@ body{
   100% { background-position: -200% 0; }
 }
 
-/* Remove the loading background once image loads */
 #gallery img.loaded {
   background: none;
   animation: none;
@@ -657,7 +777,6 @@ body{
   border-bottom: 4px solid #FF1493;
   border-left: 3px solid #00CED1;
   border-right: 3px solid #9370DB;
-  /* MOBILE: Text overflow fix */
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
@@ -692,9 +811,7 @@ footer {
   position: relative !important;
   width: 90% !important;
   max-width: 500px !important;
-  /* PULSATING EFFECT ADDED */
   animation: pulseShake 3s infinite ease-in-out !important;
-  /* MOBILE: Better touch */
   -webkit-tap-highlight-color: transparent !important;
   touch-action: manipulation !important;
   min-height: 70px !important;
@@ -1131,7 +1248,6 @@ footer {
     font-size: 20px !important;
     min-height: 60px !important;
   }
-  /* MOBILE: Larger mute button */
   #muteBtn {
     width: 70px;
     height: 70px;
@@ -1154,7 +1270,6 @@ footer {
     height: 250px;
     max-width: 100%;
   }
-  /* MOBILE: Reduce animations for performance */
   .floating-balloon {
     animation-duration: 50s;
   }
@@ -1178,7 +1293,7 @@ footer {
 </header>
 
 <div class="romance" id="romance">
-🎉✨ HAPPY BIRTHDAY, HELLEN❤️! ✨🎉
+🎉✨ HAPPY BIRTHDAY, BLESS! ✨🎉
 
 🌟 Today is ALL ABOUT YOU — the incredible person who brings sunshine ☀️, laughter 😂, and endless joy to everyone around! 
 I'm beyond grateful to have you as a friend and to celebrate this magical day with you! 🥳
@@ -1281,35 +1396,38 @@ Here's to a year packed with amazing adventures 🗺️, dreams coming true ✨,
   <p class="rating-message"></p>
 </div>
 
-<!-- VIDEO GALLERY SECTION (UPDATED WITH BETTER POSTERS) -->
+<!-- VIDEO GALLERY SECTION (FIXED VERSION) -->
 <div class="video-gallery-container">
   <h3 class="video-gallery-title">
     <i class="fas fa-video"></i> 🎬 BIRTHDAY MEMORIES VIDEOS 🎬
   </h3>
   <div class="video-gallery">
     <div class="video-item" onclick="openVideoLightbox('birthday_video1.mp4')">
-      <video preload="metadata">
+      <video preload="metadata" muted loop playsinline>
         <source src="birthday_video1.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
       <div class="video-play-button">▶️</div>
     </div>
+    
     <div class="video-item" onclick="openVideoLightbox('birthday_video2.mp4')">
-      <video preload="metadata">
+      <video preload="metadata" muted loop playsinline>
         <source src="birthday_video2.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
       <div class="video-play-button">▶️</div>
     </div>
+    
     <div class="video-item" onclick="openVideoLightbox('birthday_video3.mp4')">
-      <video preload="metadata">
+      <video preload="metadata" muted loop playsinline>
         <source src="birthday_video3.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
       <div class="video-play-button">▶️</div>
     </div>
+    
     <div class="video-item" onclick="openVideoLightbox('birthday_video4.mp4')">
-      <video preload="metadata">
+      <video preload="metadata" muted loop playsinline>
         <source src="birthday_video4.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -1318,7 +1436,7 @@ Here's to a year packed with amazing adventures 🗺️, dreams coming true ✨,
   </div>
 </div>
 
-<!-- PICTURE GALLERY (UPDATED WITH HIGHER QUALITY IMAGES) -->
+<!-- PICTURE GALLERY -->
 <h3 style="color:#fff; margin-top:15px; text-shadow: 0 3px 10px rgba(0,0,0,0.4); z-index: 20; position: relative; font-size: 24px;">
   <i class="fas fa-camera"></i> 📸 BIRTHDAY MEMORIES GALLERY 📸
 </h3>
@@ -1353,7 +1471,7 @@ and building stories that you'll treasure forever! 📖
   <small>✨ Made with <i class="fas fa-heart" style="color:#ff4d6d;"></i> & magic for your special day! ✨ — Click SPIN to begin the celebration! 🎉</small>
 </footer>
 
-<!-- SHARE BUTTON AT BOTTOM (NOW WITH PULSATING) -->
+<!-- SHARE BUTTON AT BOTTOM -->
 <button id="shareBtn"><i class="fab fa-whatsapp"></i> 📤 SHARE MY PRIZE WITH BLESS! 📤</button>
 
 <div class="toast-wrap" id="toastWrap" aria-hidden="true"></div>
@@ -1364,20 +1482,13 @@ and building stories that you'll treasure forever! 📖
 
 <script>
 // ========== MOBILE OPTIMIZATION ==========
-// Detect mobile
 const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-// Fix touch delays
 document.addEventListener('touchstart', function() {}, {passive: true});
-
-// ========== FIXED: WHEEL DISPLAY ISSUE ==========
-// REMOVED: fixCanvasCentering() function that was causing conflicts
 
 function onReady(fn){ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
 
-// VIDEO LIGHTBOX FUNCTION WITH MUSIC CONTROL
+// ========== MOBILE-FRIENDLY VIDEO LIGHTBOX ==========
 function openVideoLightbox(videoSrc) {
-  // Pause background music when video opens
   if(window.__bgMusic && !window.__bgMusic.paused) {
     window.__bgMusic.pause();
     window.__bgMusicWasPlaying = true;
@@ -1387,99 +1498,117 @@ function openVideoLightbox(videoSrc) {
   
   const lightbox = document.createElement('div');
   lightbox.className = 'video-lightbox';
+  lightbox.setAttribute('id', 'videoLightbox');
+  
   lightbox.innerHTML = `
     <div class="video-lightbox-content">
-      <video controls autoplay>
+      <div class="video-lightbox-header">
+        <button class="close-video-lightbox-mobile" onclick="closeVideoLightbox()">
+          <i class="fas fa-times"></i> Close
+        </button>
+        <div class="video-title">🎬 Birthday Memory Video</div>
+      </div>
+      <video controls playsinline>
         <source src="${videoSrc}" type="video/mp4">
         Your browser does not support the video tag.
       </video>
-      <button class="close-video-lightbox">×</button>
+      <button class="close-video-lightbox" onclick="closeVideoLightbox()">×</button>
+      <div class="mobile-controls">
+        <button class="mobile-close-btn" onclick="closeVideoLightbox()">
+          <i class="fas fa-times-circle"></i> CLOSE VIDEO
+        </button>
+      </div>
     </div>
   `;
-  document.body.appendChild(lightbox);
   
-  // Get the video element
+  document.body.appendChild(lightbox);
+  document.body.style.overflow = 'hidden';
+  
   const videoElement = lightbox.querySelector('video');
   
-  // Resume music when video ends
-  videoElement.addEventListener('ended', () => {
-    if(window.__bgMusic && window.__bgMusicWasPlaying && !isMuted) {
-      window.__bgMusic.play().catch(() => {});
+  lightbox.addEventListener('click', (e) => {
+    if(e.target.className === 'video-lightbox') {
+      closeVideoLightbox();
     }
-    lightbox.remove();
   });
   
-  // Resume music when video is paused
+  document.addEventListener('keydown', function closeOnEsc(e) {
+    if(e.key === 'Escape') {
+      closeVideoLightbox();
+      document.removeEventListener('keydown', closeOnEsc);
+    }
+  });
+  
+  videoElement.addEventListener('ended', () => {
+    closeVideoLightbox();
+  });
+  
   videoElement.addEventListener('pause', () => {
     if(window.__bgMusic && window.__bgMusicWasPlaying && !isMuted) {
       window.__bgMusic.play().catch(() => {});
     }
   });
   
-  // Pause music when video plays
   videoElement.addEventListener('play', () => {
     if(window.__bgMusic && !window.__bgMusic.paused) {
       window.__bgMusic.pause();
     }
   });
   
-  lightbox.addEventListener('click', (e) => {
-    if(e.target.className === 'video-lightbox' || e.target.className === 'close-video-lightbox') {
-      // Resume music when closing lightbox if it was playing
-      if(window.__bgMusic && window.__bgMusicWasPlaying && !isMuted) {
-        window.__bgMusic.play().catch(() => {});
-      }
-      lightbox.remove();
-    }
+  videoElement.play().catch(e => {
+    console.log("Autoplay prevented:", e);
   });
 }
 
-// Initialize video previews with music control
-function initVideoPreviews() {
-  document.querySelectorAll('.video-item video').forEach(video => {
-    video.addEventListener('click', function(e) {
-      e.stopPropagation();
-      
-      // Pause background music when preview plays
-      if(window.__bgMusic && !window.__bgMusic.paused) {
-        window.__bgMusic.pause();
-        window.__previewMusicWasPlaying = true;
-      } else {
-        window.__previewMusicWasPlaying = false;
-      }
-      
-      if(this.paused) {
-        this.play();
-        
-        // Resume music when preview ends
-        this.addEventListener('ended', () => {
-          if(window.__bgMusic && window.__previewMusicWasPlaying && !isMuted) {
-            window.__bgMusic.play().catch(() => {});
-          }
-        });
-        
-        // Resume music when preview is paused
-        this.addEventListener('pause', () => {
-          if(window.__bgMusic && window.__previewMusicWasPlaying && !isMuted) {
-            window.__bgMusic.play().catch(() => {});
-          }
-        });
-      } else {
-        this.pause();
-        // Resume music when manually paused
-        if(window.__bgMusic && window.__previewMusicWasPlaying && !isMuted) {
-          window.__bgMusic.play().catch(() => {});
-        }
-      }
+function closeVideoLightbox() {
+  const lightbox = document.getElementById('videoLightbox');
+  if(!lightbox) return;
+  
+  const video = lightbox.querySelector('video');
+  if(video) {
+    video.pause();
+    video.currentTime = 0;
+  }
+  
+  if(window.__bgMusic && window.__bgMusicWasPlaying && !isMuted) {
+    window.__bgMusic.play().catch(() => {});
+  }
+  
+  lightbox.remove();
+  document.body.style.overflow = 'auto';
+}
+
+// ========== VIDEO THUMBNAILS AUTO-PLAY ==========
+function initVideoThumbnails() {
+  const videoItems = document.querySelectorAll('.video-item video');
+  
+  videoItems.forEach(video => {
+    const playPromise = video.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.log("Autoplay prevented:", error);
+      });
+    }
+    
+    video.addEventListener('mouseenter', () => {
+      video.controls = true;
+    });
+    
+    video.addEventListener('mouseleave', () => {
+      video.controls = false;
+    });
+    
+    video.addEventListener('touchstart', () => {
+      video.controls = true;
+      setTimeout(() => { video.controls = false; }, 3000);
     });
   });
 }
 
-// Create floating balloons - MOBILE OPTIMIZED
+// Create floating balloons
 function createFloatingBalloons() {
   const balloonEmojis = ['🎈', '🎈', '🎈', '🎈', '🎈', '🎈', '🎈', '🎈', '🎈', '🎈'];
-  
-  // Fewer balloons on mobile
   const balloonCount = isMobile ? 8 : 15;
   
   for(let i = 0; i < balloonCount; i++) {
@@ -1487,7 +1616,6 @@ function createFloatingBalloons() {
       const balloon = document.createElement('div');
       balloon.className = 'floating-balloon';
       balloon.style.left = `${Math.random() * 100}%`;
-      // Slower on mobile
       balloon.style.animationDuration = `${isMobile ? 25 : 15 + Math.random() * 10}s`;
       balloon.style.animationDelay = `${Math.random() * 5}s`;
       balloon.innerHTML = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
@@ -1498,7 +1626,6 @@ function createFloatingBalloons() {
         setTimeout(() => balloon.remove(), 700);
       });
       
-      // Remove balloon after animation completes
       setTimeout(() => {
         if (balloon.parentNode) {
           balloon.remove();
@@ -1510,7 +1637,6 @@ function createFloatingBalloons() {
 
 // Create sparkles
 function createSparkles() {
-  // Fewer sparkles on mobile
   const sparkleCount = isMobile ? 15 : 25;
   
   for(let i = 0; i < sparkleCount; i++) {
@@ -1524,21 +1650,18 @@ function createSparkles() {
   }
 }
 
-// Preload gallery images for better quality
+// Preload gallery images
 function preloadGalleryImages() {
   const images = document.querySelectorAll('#gallery img');
   images.forEach(img => {
-    // Create a new image to preload
     const preload = new Image();
     preload.src = img.src;
     
     preload.onload = function() {
-      // Mark the original image as loaded
       img.classList.add('loaded');
     };
     
     preload.onerror = function() {
-      // If the original fails, it will use the onerror fallback
       img.classList.add('loaded');
     };
   });
@@ -1573,7 +1696,6 @@ function showWin(text, ms=3000){
   b.classList.add('show');
   b.setAttribute('aria-hidden','false');
   
-  // Create extra confetti for win
   createConfettiBurst(150);
   
   setTimeout(()=> {
@@ -1627,7 +1749,7 @@ function createConfettiBurst(count = 100) {
   }
 }
 
-// Rating system - store rating
+// Rating system
 let userRating = 0;
 function rateBirthday(rating) {
   userRating = rating;
@@ -1657,7 +1779,6 @@ function rateBirthday(rating) {
   createConfettiBurst(rating * 25);
   showToast(`🎯 Thanks for ${rating} star${rating > 1 ? 's' : ''}! You rock! 🌟`, 'success', 2500);
   
-  // Save rating to localStorage
   localStorage.setItem('bday_user_rating', rating.toString());
 }
 
@@ -1685,7 +1806,6 @@ function initLightbox() {
       const lightbox = document.createElement('div');
       lightbox.className = 'lightbox';
       
-      // Use the same image source (already high quality now)
       const imgSrc = this.src;
       
       lightbox.innerHTML = `
@@ -1705,50 +1825,42 @@ function initLightbox() {
   });
 }
 
-// Show final gift when all spins are used
+// Show final gift
 function showFinalGift() {
   const finalGift = document.getElementById('finalGift');
   finalGift.classList.add('show');
   createConfettiBurst(300);
   showToast('🎁✨ ALL SPINS USED! YOUR FINAL BIRTHDAY GIFT IS REVEALED! ✨🎁', 'success', 7000);
   
-  // Auto-scroll to gift
   setTimeout(() => {
     finalGift.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 500);
 }
 
 onReady(()=> {
-  // Add decorative elements
   createFloatingBalloons();
   createSparkles();
   initLightbox();
-  initVideoPreviews();
+  initVideoThumbnails();
   
-  // Preload gallery images for better quality
   setTimeout(() => {
     preloadGalleryImages();
   }, 1000);
   
-  // Start countdown timer
   updateCountdown();
   setInterval(updateCountdown, 1000);
   
-  // Recreate balloons periodically
   setInterval(createFloatingBalloons, 30000);
   
-  // Load saved rating
   const savedRating = localStorage.getItem('bday_user_rating');
   if (savedRating) {
     userRating = parseInt(savedRating);
     rateBirthday(userRating);
   }
   
-  // ENTRY PASSWORD (for entering the game)
+  // ENTRY PASSWORD
   const PASSWORD = "12345";
-  
-  // RESET PASSWORD (different from entry password)
-  const RESET_PASSWORD = "Bless";
+  const RESET_PASSWORD = "0000";
   
   const MAX_SPINS = 3;
   const STORAGE_KEY = 'bday_spins_left';
@@ -1757,13 +1869,10 @@ onReady(()=> {
   
   let spinCount = parseInt(localStorage.getItem(SPIN_COUNT_KEY) || '0');
 
-  // MOBILE-FRIENDLY PASSWORD PROMPT
   let input;
   if (isMobile) {
-    // Simpler prompt for mobile
     input = prompt("Enter password (12345):");
   } else {
-    // Fancy prompt for desktop
     input = prompt("🎂✨ WELCOME TO YOUR BIRTHDAY CELEBRATION, GOOD LUCK IN SPINNING YOUR WHEEL! ✨🎂\n\n🔐 Enter the secret password to begin the party! 🎉\n\n💡 Hint: It's 12345\n\nPassword:");
   }
   
@@ -1782,7 +1891,6 @@ onReady(()=> {
     return;
   }
   
-  // Welcome message with emojis
   setTimeout(() => {
     showToast('🎉✨ WELCOME TO YOUR BIRTHDAY CELEBRATION, GOOD LUCK IN SPINNING YOUR WHEEL! 🎂✨', 'success', 3500);
     createConfettiBurst(300);
@@ -1801,11 +1909,9 @@ onReady(()=> {
       b.disabled = spinsLeft <= 0;
       if (spinsLeft <= 0) {
         b.innerHTML = '<i class="fas fa-lock"></i> 🔒 NO SPINS LEFT 🔒';
-        // Stop shaking when disabled
         b.style.animation = 'none';
       } else {
         b.innerHTML = '<i class="fas fa-redo-alt"></i> 🎡 SPIN THE WHEEL 🎡';
-        // Resume shaking when enabled
         b.style.animation = 'pulseShake 3s infinite ease-in-out';
       }
     }
@@ -1823,7 +1929,6 @@ onReady(()=> {
   }
   window.__bgMusic = music;
   
-  // Try to play music with user interaction
   document.body.addEventListener('click', function initMusic() {
     if (window.__bgMusic && !window.__musicStarted) {
       window.__bgMusic.play().then(()=> {
@@ -1851,7 +1956,6 @@ onReady(()=> {
   }
   
   if(muteBtn){
-    // Add touch feedback for mobile
     muteBtn.addEventListener('touchstart', function(e) {
       if (isMobile) {
         this.style.transform = 'scale(0.9)';
@@ -1879,32 +1983,21 @@ onReady(()=> {
     return;
   }
 
-  // ENHANCED: More attractive colors for the wheel
   const prizes = ["👗 DRESS", "🥤 COCACOLA", "🍦 ICE CREAM", "💰 200GH$", "📱 15GB DATA", "🎁 FREE GIFT", "📶 5GB DATA", "🔄 TRY AGAIN"];
-  const colors = ["#FFD700", "#FF6B6B", "#4ECDC4", "#FFD166", "#06D6A0", "#FF9A8B", "#118AB2", "#EF476F"]; // Enhanced colors
+  const colors = ["#FFD700", "#FF6B6B", "#4ECDC4", "#FFD166", "#06D6A0", "#FF9A8B", "#118AB2", "#EF476F"];
   const numSegments = prizes.length;
   const anglePerSegment = 2*Math.PI / numSegments;
   let currentRotation = 0;
 
-  // ========== FIXED: DRAW WHEEL FUNCTION ==========
   function drawWheel(rotation = 0) {
     const dpr = window.devicePixelRatio || 1;
-    
-    // Set canvas size - FIXED: Always use the same dimensions
     const displaySize = 290;
     
-    // Set canvas display size
     canvas.style.width = displaySize + 'px';
     canvas.style.height = displaySize + 'px';
-    
-    // Set drawing buffer size with DPR
     canvas.width = displaySize * dpr;
     canvas.height = displaySize * dpr;
-    
-    // Scale the context
     ctx.scale(dpr, dpr);
-    
-    // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
     
@@ -1914,7 +2007,6 @@ onReady(()=> {
     ctx.translate(cx, cy);
     ctx.rotate(rotation);
     
-    // Draw wheel segments with gradient
     for(let i = 0; i < numSegments; i++) {
       const gradient = ctx.createLinearGradient(0, -radius, 0, radius);
       gradient.addColorStop(0, colors[i % colors.length]);
@@ -1930,7 +2022,6 @@ onReady(()=> {
       ctx.lineWidth = 4;
       ctx.stroke();
 
-      // Draw text
       ctx.save();
       const textAngle = i * anglePerSegment + anglePerSegment / 2;
       ctx.rotate(textAngle);
@@ -1943,7 +2034,6 @@ onReady(()=> {
       ctx.restore();
     }
     
-    // Draw center circle with gradient
     const centerGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 38);
     centerGradient.addColorStop(0, '#ffffff');
     centerGradient.addColorStop(0.5, '#ffccdd');
@@ -1983,10 +2073,7 @@ onReady(()=> {
     return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0');
   }
   
-  // FIXED: Initial draw of wheel - immediately show it
   drawWheel(0);
-  
-  // Also redraw on window resize
   window.addEventListener('resize', () => {
     setTimeout(() => drawWheel(currentRotation), 100);
   });
@@ -2006,7 +2093,6 @@ onReady(()=> {
     prizeEl.classList.add('pop');
   }
 
-  // SPIN FUNCTION - SECOND SPIN ALWAYS LANDS ON TRY AGAIN
   let spinning = false;
   
   function spinOnce(){
@@ -2017,7 +2103,6 @@ onReady(()=> {
       return;
     }
 
-    // AUTO-SCROLL TO WHEEL
     const wheelWrap = document.getElementById('wheelWrap');
     if(wheelWrap) {
       wheelWrap.classList.add('pulse-wheel');
@@ -2028,43 +2113,33 @@ onReady(()=> {
     spinning = true;
     if(window.__bgMusic && !isMuted) window.__bgMusic.play().catch(()=>{});
 
-    // DETERMINE WHICH PRIZE TO LAND ON - GUARANTEED SEQUENCE
     let prizeIndex;
     spinCount++;
     
-    // ALWAYS FOLLOW THIS SEQUENCE:
-    // 1st spin = ICE CREAM (index 2)
-    // 2nd spin = TRY AGAIN (index 7) ← GUARANTEED!
-    // 3rd spin = 5GB DATA (index 6)
     if (spinCount === 1) {
-      prizeIndex = 2; // ICE CREAM
+      prizeIndex = 2;
     } else if (spinCount === 2) {
-      prizeIndex = 7; // TRY AGAIN ← THIS WILL ALWAYS HAPPEN ON SECOND SPIN
+      prizeIndex = 7;
     } else if (spinCount === 3) {
-      prizeIndex = 6; // 5GB DATA
+      prizeIndex = 6;
     } else {
-      // If somehow more than 3 spins, make it random
       prizeIndex = Math.floor(Math.random() * prizes.length);
     }
     
     localStorage.setItem(SPIN_COUNT_KEY, spinCount.toString());
 
-    // SPECIAL ANIMATION FOR SECOND SPIN
     const isSecondSpin = spinCount === 2;
     if (isSecondSpin) {
       showToast("🎰✨ SPECIAL SPIN! Let's see what fate has for you... ✨🎰", 'info', 2500);
     }
 
-    // ROTATION CALCULATION
     const segmentCenterAngle = prizeIndex * anglePerSegment + anglePerSegment/2;
     const targetRotation = (Math.PI * 2) - segmentCenterAngle - (Math.PI/2);
     
-    // Add extra rotations for spinning effect
-    const extraSpins = isSecondSpin ? 8 : 6; // More spins for second spin
+    const extraSpins = isSecondSpin ? 8 : 6;
     const totalRotation = currentRotation + (extraSpins * 2 * Math.PI) + targetRotation;
 
-    // Animate the spin
-    const duration = isSecondSpin ? 3200 : 2500; // Longer for second spin
+    const duration = isSecondSpin ? 3200 : 2500;
     let start = null;
     const startRotation = currentRotation;
 
@@ -2079,7 +2154,6 @@ onReady(()=> {
       const elapsed = timestamp - start;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Easing function for smooth deceleration
       const easedProgress = easeOutCubic(progress, 0, 1, 1);
       
       currentRotation = startRotation + (totalRotation - startRotation) * easedProgress;
@@ -2088,11 +2162,9 @@ onReady(()=> {
       if (progress < 1) {
         requestAnimationFrame(animateSpin);
       } else {
-        // Final position
         currentRotation = targetRotation % (Math.PI * 2);
         drawWheel(currentRotation);
         
-        // Update game state
         spinsLeft = Math.max(0, spinsLeft - 1);
         saveSpinsLeft(spinsLeft);
         updateChancesUI();
@@ -2100,11 +2172,9 @@ onReady(()=> {
         const prizeText = isSecondSpin ? `😅 ${prizes[prizeIndex]} 😅` : `🎉 ${prizes[prizeIndex]} 🎉`;
         latestPrize = prizes[prizeIndex];
         
-        // Show prize
         showPrizeText(prizeText);
         showWin(prizeText, 2000);
         
-        // SPECIAL MESSAGES FOR EACH SPIN WITH EMOJIS
         if (spinCount === 1) {
           showToast(`🍦 YUM! You won ICE CREAM! 🍨 Keep spinning for more surprises! 🎡 You can try your luck again! 🎯`, 'success', 5500);
         } else if (spinCount === 2) {
@@ -2115,12 +2185,10 @@ onReady(()=> {
         
         updatePrizeLog(latestPrize);
 
-        // Add confetti for wins (not for TRY AGAIN)
         if (!isSecondSpin) {
           createConfettiBurst(100);
         }
         
-        // Show final gift when all spins are used
         if (spinsLeft === 0) {
           setTimeout(() => {
             showFinalGift();
@@ -2135,7 +2203,6 @@ onReady(()=> {
   }
 
   const btn = document.getElementById('btn');
-  // Add mobile touch support
   btn.addEventListener('touchstart', function(e) {
     if (isMobile) {
       this.style.transform = 'scale(0.95)';
@@ -2181,7 +2248,6 @@ onReady(()=> {
     document.getElementById('prize').textContent = "";
     document.getElementById('prize').style.textAlign = 'center';
     
-    // Hide final gift
     document.getElementById('finalGift').classList.remove('show');
     
     spinCount = 0;
@@ -2206,8 +2272,6 @@ onReady(()=> {
   });
 
   updateChancesUI();
-  
-  // Auto-refresh balloons (less frequent on mobile)
   setInterval(createFloatingBalloons, isMobile ? 45000 : 35000);
 });
 </script>
