@@ -1403,7 +1403,7 @@ Here's to a year packed with amazing adventures 🗺️, dreams coming true ✨,
   </h3>
   <div class="video-gallery">
     <div class="video-item" onclick="openVideoLightbox('birthday_video1.mp4')">
-      <video preload="birthday_video1.mp4" muted loop playsinline>
+      <video preload="metadata" muted loop playsinline>
         <source src="birthday_video1.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -1411,7 +1411,7 @@ Here's to a year packed with amazing adventures 🗺️, dreams coming true ✨,
     </div>
     
     <div class="video-item" onclick="openVideoLightbox('birthday_video2.mp4')">
-      <video preload="birthday_video2.mp4" muted loop playsinline>
+      <video preload="metadata" muted loop playsinline>
         <source src="birthday_video2.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -1419,7 +1419,7 @@ Here's to a year packed with amazing adventures 🗺️, dreams coming true ✨,
     </div>
     
     <div class="video-item" onclick="openVideoLightbox('birthday_video3.mp4')">
-      <video preload= "birthday_video3.mp4" muted loop playsinline>
+      <video preload="metadata" muted loop playsinline>
         <source src="birthday_video3.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -1427,7 +1427,7 @@ Here's to a year packed with amazing adventures 🗺️, dreams coming true ✨,
     </div>
     
     <div class="video-item" onclick="openVideoLightbox('birthday_video4.mp4')">
-      <video preload="birthday_video4.mp4" muted loop playsinline>
+      <video preload="metadata" muted loop playsinline>
         <source src="birthday_video4.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -1871,8 +1871,7 @@ onReady(()=> {
 
   let input;
   if (isMobile) {
-    input = prompt("🎂✨ WELCOME TO YOUR BIRTHDAY CELEBRATION, GOOD LUCK IN SPINNING YOUR WHEEL! ✨🎂\n\n🔐 Enter the secret password to begin the party! 🎉\n\n💡 Hint: It's 12345\n\nPassword:");
-  }
+    input = prompt("Enter password (12345):");
   } else {
     input = prompt("🎂✨ WELCOME TO YOUR BIRTHDAY CELEBRATION, GOOD LUCK IN SPINNING YOUR WHEEL! ✨🎂\n\n🔐 Enter the secret password to begin the party! 🎉\n\n💡 Hint: It's 12345\n\nPassword:");
   }
@@ -2229,7 +2228,7 @@ onReady(()=> {
   resetBtn.addEventListener('click', ()=>{
     let resetPassword;
     if (isMobile) {
-      resetPassword = prompt("Enter RESET password HINT (12345):");
+      resetPassword = prompt("Enter RESET password (12345):");
     } else {
       resetPassword = prompt("🔄✨ RESET THE PARTY! ✨🔄\n\n🔐 Enter the RESET password:\n\n💡 Reset Password: 12345\n\nPassword:");
     }
@@ -2278,8 +2277,3 @@ onReady(()=> {
 </script>
 </body>
 </html>
-
-
-
-
-
